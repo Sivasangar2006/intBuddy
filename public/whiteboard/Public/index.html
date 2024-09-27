@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Whiteboard</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">   
+            <div class="canvas-div">
+                <canvas id="whiteboard"></canvas>
+            </div> 
+            <div class="toolbar-div">
+                <input type="color" id="color-selector">
+                <button onclick="red()">Red</button>
+                <button onclick="blue()">Blue</button>
+                <button onclick="green()">Green</button>
+                <button onclick="black()">Black</button>
+                <button onclick="erase()">Eraser</button>
+                <button onclick="resetSketch()">Reset Board</button>
+                <input type="range" id="weight" min="1" max="30" value="17"> 
+    
+                <button onclick="getWindow()">getWindow</button>
+            </div>
+        </div>
+        
+
+        <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="server.js"></script>
+        <script src="sketch.js"></script>
+    </body>
+</html>

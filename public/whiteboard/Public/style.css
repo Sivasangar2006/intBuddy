@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    height: 100vh; /* Ensure the body takes up the full viewport height */
+}
+
+button {
+    border-radius: 5px;
+    border-style: none;
+    background-color: rgb(204, 204, 204);
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: background-color 0.15s ease;
+}
+
+button:hover {
+    background-color: rgb(180, 180, 180);
+}
+
+#weight {
+    margin-left: 10px;
+}
+
+.toolbar-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* Set the toolbar height */
+}
+
+#whiteboard {
+    flex-grow: 1;
+    border-style: solid;
+    border-color: black;
+    border-radius: 20px;
+    border-width: 3px;
+    height: calc(100vh - 50px); /* Adjust canvas height to leave room for the toolbar */
+}
+
+.canvas-div {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}

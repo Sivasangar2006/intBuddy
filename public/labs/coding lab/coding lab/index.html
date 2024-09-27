@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code Editor</title>
+    <link rel="stylesheet" href="styles.css">  <!-- Link to CSS -->
+</head>
+<body>
+    <div id="controls">
+        <select id="language-select">
+            <option value="python3">Python 3</option>
+            <option value="cpp17">C++ 17</option>
+            <option value="java">Java</option>
+        </select>
+        <button id="run-btn">Run Code</button>
+    </div>
+    
+    <div id="editor-container"></div>
+    
+    <div id="output"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
+    <script src="script.js"></script> <!-- Link to JS file -->
+</body>
+</html>

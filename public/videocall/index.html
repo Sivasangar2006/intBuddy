@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INTBUD</title>
+  </head>
+  <body>
+    <div class="videos">
+      <span id="you-span">
+        <video id="webcamVideo" autoplay playsinline></video>
+      </span>
+      <span id="other-span">
+        <video id="remoteVideo" autoplay playsinline></video>
+      </span>
+
+
+    </div>
+
+
+    <div class="buttons-div">
+      <button class="bottom-buttons" id="webcamButtonNew"><img src="images/camera-slash-svgrepo-com.svg" id="webcamImage"></button>
+      <button class="bottom-buttons" id="micButtonNew">M</button>
+      <button class="bottom-buttons" id="hangupButtonNew">H</button>
+    </div>
+
+    <!-- //adding and join section
+    <div class="offer-answer-div">
+      <div class="offer-div">
+        <input type="text">
+        <button class="oa-button">Add</button>
+      </div>
+      <div class="answer-div">
+        <input type="text">
+        <button class="oa-button">Join</button>
+      </div>
+    </div> -->
+
+
+    <div class="test-div">
+      <button id="webcamButton">Start webcam and mic</button>
+      <h2>2. Create a new Call</h2>
+      <button id="callButton" disabled>Create Call (offer)</button>
+
+      <h2>3. Join a Call</h2>
+      <p>Answer the call from a different browser window or device</p>
+      
+      <input id="callInput" />
+      <button id="answerButton" disabled>Answer</button>
+
+      <h2>4. Hangup</h2>
+
+      <button id="hangupButton" disabled>Hangup</button>
+
+      <script type="module" src="./main.js"></script>
+
+    </div>
+    
+  </body>
+</html>

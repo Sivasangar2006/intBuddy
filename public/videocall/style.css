@@ -87,10 +87,23 @@ body {
   justify-content: center; /* Center the image horizontally */
   align-items: center; /* Center the image vertically */
   padding: 0;
+  cursor: pointer;
+}
+
+.bottom-buttons:hover{
+  background-color: rgb(91, 91, 91);
 }
 
 .bottom-buttons img {
   width: 50%; /* Adjust to control the image size */
   height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Ensure it maintains aspect ratio */
+}
+
+#hangupButtonNew{
+  background-color: rgb(194, 8, 8);
+}
+
+#hangupButtonNew:hover{
+  background-color:rgb(171, 7, 7);
 }

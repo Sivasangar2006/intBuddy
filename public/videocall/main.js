@@ -242,7 +242,7 @@
 // };
 
 
-import './style.css';
+import '../landing/styles.css';
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, onSnapshot, getDoc, updateDoc } from 'firebase/firestore';

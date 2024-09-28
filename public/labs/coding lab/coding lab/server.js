@@ -1,36 +1,43 @@
 const express = require('express');
-const axios = require('axios');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const fetch = require('node-fetch');
 
 const app = express();
-app.use(cors()); // Enable CORS
+const PORT = 3000;
+
+// JDoodle API credentials
+const clientId = 'a608ec4cfd7983b2525baf933b064a8'; // Replace with your JDoodle client ID
+const clientSecret = 'db1144239a1f96e5d22da7139c24809c6878edc91c8703ca94e44c4932e7579'; // Replace with your JDoodle client secret
+
 app.use(bodyParser.json());
 
-app.post('/run-code', async (req, res) => {
-    const { script, language } = req.body;
+app.post('/run', async (req, res) => {
+    const { code, language } = req.body;
+
+    const payload = {
+        script: code,
+        language: language,
+        versionIndex: '0', // JDoodle version index for the selected language
+        clientId: clientId,
+        clientSecret: clientSecret
+    };
 
     try {
-        const response = await axios.post('https://api.jdoodle.com/v1/execute', {
-            script,
-            language,
-            versionIndex: '0',
-            stdin: '',
-        }, {
+        const response = await fetch('https://api.jdoodle.com/v1/execute', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'client-id': 'a608ec4cfd7983b2525baf933b064a8',  // Replace with your JDoodle client ID
-                'client-secret': 'db1144239a1f96e5d22da7139c24809c6878edc91c8703ca94e44c4932e7579',  // Replace with your JDoodle client secret
             },
+            body: JSON.stringify(payload),
         });
 
-        res.send(response.data);
+        const result = await response.json();
+        res.json({ output: result.output });
     } catch (error) {
-        console.error(error); // Log error for debugging
-        res.status(500).send({ error: 'Error executing code' });
+        res.json({ error: 'Error executing code.' });
     }
 });
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });

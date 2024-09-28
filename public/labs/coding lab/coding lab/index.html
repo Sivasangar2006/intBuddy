@@ -3,24 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Code Editor</title>
-    <link rel="stylesheet" href="styles.css">  <!-- Link to CSS -->
+    <title>Code Runner with Monaco Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .editor-container {
+            border: 1px solid #ccc;
+            height: 400px;
+            margin-top: 20px;
+        }
+        select, button {
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
-    <div id="controls">
-        <select id="language-select">
-            <option value="python3">Python 3</option>
-            <option value="cpp17">C++ 17</option>
-            <option value="java">Java</option>
-        </select>
-        <button id="run-btn">Run Code</button>
-    </div>
-    
-    <div id="editor-container"></div>
-    
-    <div id="output"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs/loader.min.js"></script>
-    <script src="script.js"></script> <!-- Link to JS file -->
+    <div class="container">
+        <h1>Code Runner with Monaco Editor</h1>
+
+        <label for="language">Choose Language:</label>
+        <select id="language" onchange="setEditorLanguage()">
+            <option value="python3">Python 3</option>
+            <option value="java">Java</option>
+            <option value="cpp17">C++17</option>
+            <option value="c">C</option>
+            <option value="javascript">JavaScript (Node.js)</option>
+        </select>
+
+        <div id="editor" class="editor-container"></div>
+
+        <button onclick="runCode()">Run Code</button>
+
+        <h2>Output:</h2>
+        <div class="output" id="output"></div>
+    </div>
+
+    <!-- Monaco Editor CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        let editor;
+
+        // Load Monaco editor
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: "# Write your code here...",
+                language: 'python',
+                theme: 'vs-dark',
+                automaticLayout: true
+            });
+        });
+
+        function setEditorLanguage() {
+            const language = document.getElementById("language").value;
+            const languageMap = {
+                "python3": "python",
+                "java": "java",
+                "cpp17": "cpp",
+                "c": "c",
+                "javascript": "javascript"
+            };
+            monaco.editor.setModelLanguage(editor.getModel(), languageMap[language]);
+        }
+
+        async function runCode() {
+            const code = editor.getValue();
+            const language = document.getElementById("language").value;
+            const outputElement = document.getElementById("output");
+            outputElement.textContent = "Running code...";
+
+            const response = await fetch('http://localhost:3000/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code, language })
+            });
+
+            const result = await response.json();
+            outputElement.textContent = result.output || result.error;
+        }
+    </script>
+
 </body>
 </html>

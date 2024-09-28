@@ -1,45 +1,35 @@
-// Load Monaco Editor
-require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs' } });
-require(['vs/editor/editor.main'], function() {
-    window.editor = monaco.editor.create(document.getElementById('editor-container'), {
-        value: '// Write your code here',
-        language: 'python',  // Default language can be set here
-        theme: 'vs-dark',
-        automaticLayout: true,
+const express = require('express');
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+
+const clientId = 'a608ec4cfd7983b2525baf933b064a8'; // Replace with your JDoodle client ID
+const clientSecret = 'db1144239a1f96e5d22da7139c24809c6878edc91c8703ca94e44c4932e7579'; // Replace with your JDoodle client secret
+
+app.post('/run', async (req, res) => {
+    const { code, language } = req.body;
+
+    const response = await fetch("https://api.jdoodle.com/v1/execute", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            script: code,
+            language: language,
+            versionIndex: "0",
+            clientId: clientId,
+            clientSecret: clientSecret
+        })
     });
+
+    const result = await response.json();
+    res.json(result);
 });
 
-// Function to get the selected language for JDoodle API
-function getLanguage() {
-    const languageSelect = document.getElementById('language-select');
-    return languageSelect.value;
-}
-
-// Function to run the code
-document.getElementById('run-btn').addEventListener('click', async () => {
-    const code = window.editor.getValue();
-    const language = getLanguage();
-    const outputElement = document.getElementById('output');
-    
-    outputElement.textContent = "Running code...";
-
-    try {
-        const response = await fetch('http://localhost:3000/run-code', {  // Pointing to your local server
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                script: code,
-                language: language,
-                versionIndex: '0',
-                stdin: '',  // Handle input if needed
-            })
-        });
-
-        const data = await response.json();
-        outputElement.textContent = data.output || data.error || "No output received.";
-    } catch (error) {
-        outputElement.textContent = "Error executing code: " + error.message;
-    }
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
 });

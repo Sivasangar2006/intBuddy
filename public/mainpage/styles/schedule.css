@@ -1,0 +1,81 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1b1b1b, #333333);
+    overflow: hidden;
+  }
+  
+  .logo {
+    height: 100px;
+    width: auto;
+  }
+
+.form-box {
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.05); /* Darker transparent background for glass effect */
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Shadow with higher opacity for a dark theme */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Light border to outline the glass card */
+    color: #f1f1f1; /* Light text color for visibility on dark background */
+    border-radius: 10px;
+    color: #f1f7fe;
+  }
+  
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px 24px;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .form button {
+    background-color: #0066ff;
+    color: #fff;
+    border: 0;
+    border-radius: 13px;
+    padding: 10px 16px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+  }
+  
+  .form button:hover {
+    background-color: #005ce6;
+  }
+  .input {
+    background: none;
+    border: 0;
+    outline: 0;
+    height: 40px;
+    width: 75%;
+    border: 1px solid #eee;
+    border-radius: 7px;
+    font-size: .9rem;
+    padding: 8px 15px;
+  }
+
+  .home-buttons {
+    background-color: #007bff; /* Example background color */
+    color: white; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.home-buttons a {
+    text-decoration: none; /* Removes underline from the anchor */
+    color: inherit; /* Inherit the color from the button */
+}
+
+.home-buttons:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}

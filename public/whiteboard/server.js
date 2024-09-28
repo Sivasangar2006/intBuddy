@@ -5,7 +5,7 @@ const http = require('http').createServer(app);
 //storing socket.io in io
 const io = require('socket.io')(http);
 
-app.use(express.static(__dirname));
+app.use(express.static('publ'));
 
 //.on function is basically just listening for any events
 //.emit when used on client side will send an event from the client to the server

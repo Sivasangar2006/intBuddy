@@ -284,8 +284,13 @@ const answerButton = document.getElementById('answerButton');
 const remoteVideo = document.getElementById('remoteVideo');
 const hangupButton = document.getElementById('hangupButton');
 
-// 1. Setup media sources
-webcamButton.onclick = async () => {
+const webcamButtonNew = document.getElementById('webcamButtonNew');
+const micButtonNew = document.getElementById('micButtonNew');
+const hangupButtonNew = document.getElementById('hangupButtonNew');
+
+// 1. Setup media sources (working)
+webcamButtonNew.onclick = async () => {
+  webcamImage.src = "images/camera-svgrepo-com.svg";
   localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
   remoteStream = new MediaStream();
 
@@ -308,6 +313,20 @@ webcamButton.onclick = async () => {
   answerButton.disabled = false;
   webcamButton.disabled = true;
 };
+
+let isMicOn= false;
+const micImage = document.getElementById('micImage');
+micButtonNew.onclick = async() =>{
+  if(!isMicOn){
+    micImage.src="images/mic-svgrepo-com.svg";
+    isMicOn=true;
+  }
+  else{
+    micImage.src="images/mic-off-svgrepo-com.svg";
+    isMicOn=false;
+  }
+  
+}
 
 // 2. Create an offer
 callButton.onclick = async () => {

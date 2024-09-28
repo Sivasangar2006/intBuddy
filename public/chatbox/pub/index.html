@@ -1,0 +1,204 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat { max-width: 600px; margin: 50px auto;display:none;height: 300px; }
+        /* #messages { border: 1px solid #ddd; padding: 10px; height: 500px; overflow-y: scroll; margin-bottom: 10px;} */
+        /* #userForm { margin-bottom: 20px; } */
+        #messageForm { display: none; }
+
+        /* #chat { margin: 20px; height: 300px;  padding: 10px;} */
+        /* body{
+            background-color: white;
+        } */
+        #container{
+            margin:auto;
+            margin-top: 23px;
+            height:40px;
+            width:900px;
+            border-color:rgb(33, 150, 159) ;
+            border-radius:15px;
+            border-style: solid;            
+            color:red(33, 150, 159);
+            padding:10px;
+            background-color: #3a3b3d;
+            border-width: 2px;
+        }
+        /* #message-form{
+            color:red;
+        } */
+    </style>
+</head>
+<body>
+    
+    <div id="userForm">
+        <input type="text" id="username" placeholder="Enter your username" />
+        <button id="joinBtn">Join Chat</button>
+    </div>
+    <div id="chat">
+            <div id="container"></div>
+            <input type="text" id="messageInput" placeholder="Enter a message" autocomplete="off" />
+            <button id="sendBtn">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const usernameInput = document.getElementById('username');
+        const joinBtn = document.getElementById('joinBtn');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messagesDiv = document.getElementById('messages');
+        const userForm = document.getElementById('userForm');
+        const messageForm = document.getElementById('messageForm');
+
+        // When the user clicks the Join button
+        joinBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (username) {
+                socket.emit('joinRoom', username);
+                userForm.style.display = 'none';
+                chat.style.display = 'block';
+            }
+        });
+
+        // When the user clicks the Send button
+        sendBtn.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.emit('chatMessage', message);
+                messageInput.value = '';
+            }
+        });
+
+        // Display messages in the chat
+        socket.on('message', (message) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.classList.add('container');
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        body { font-family: Arial, sans-serif;}
+        #chat { max-width: 600px; margin: 50px auto; display: none; height: 300px;
+            margin-left: 18%;
+        }
+        .container {
+            margin: auto;
+            margin-top: 10px;
+            height: 24px; /* Adjusted for message area */
+            width: 1000px; /* Full width */
+            /* border: 2px solid rgb(33, 150, 159); */
+            border-radius: 15px;
+            padding: 12px;
+            background-color: #a5a8b3;
+            color:white;
+            /* background-color: darkblue; */
+        }
+        #messageInput {
+            width: calc(100% - 100px); /* Make room for button */
+            height: 24px;
+        }
+        #sendBtn {
+            width: 5%;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #8707ff;
+            border-style: none;
+            color: aliceblue;
+        }
+        #info{
+            display: none;
+            margin-top: 25%;
+        }
+        .input {
+            color: rgb(14, 15, 15);
+            border: 2px solid #363438;
+            border-radius: 10px;
+            padding: 10px 25px;
+            background: transparent;
+            max-width: 500px;
+            margin-left:30% ;
+            width: 100%;
+        }
+
+    .input:active {
+        box-shadow: 2px 2px 15px #8707ff inset;
+    }
+
+    </style>
+</head>
+<body>
+    
+    <div id="userForm">
+        <input type="text" id="username" placeholder="Enter your username" />
+        <button id="joinBtn">Join Chat</button>
+    </div>
+    <div id="chat">
+        <div class="container">Chat Room</div>
+    </div>
+    <div id="info">
+        <input class="input" type="text" id="messageInput" placeholder="Enter a message" autocomplete="off" />
+        <button id="sendBtn">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const usernameInput = document.getElementById('username');
+        const joinBtn = document.getElementById('joinBtn');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const container = document.getElementsByClassName('container');
+        const userForm = document.getElementById('userForm');
+
+        // When the user clicks the Join button
+        joinBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (username) {
+                socket.emit('joinRoom', username);
+                userForm.style.display = 'none';
+                info.style.display="block";
+                document.getElementById('chat').style.display = 'block';
+
+                // Notify everyone that this user has joined
+                socket.emit('chatMessage', `${username} has joined the chat!`);
+            }
+        });
+
+        // When the user clicks the Send button
+        sendBtn.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            const username = usernameInput.value.trim();
+            if (message) {
+                socket.emit('chatMessage', `${message}`);
+                messageInput.value = '';
+            }
+        });
+
+        // Display messages in the chat
+        socket.on('message', (message) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.classList.add("container");
+            chat.appendChild(messageElement);
+            // chat.scrollTop = chat.scrollHeight; // Scroll to bottom
+        });
+    </script>
+</body>
+</html>
